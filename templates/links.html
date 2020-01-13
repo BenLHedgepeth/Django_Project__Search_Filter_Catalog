@@ -1,0 +1,25 @@
+{% extends 'index.html' %}
+
+{% block mineral_links %}
+
+    <ul class="letter_links">
+    {% for letter in letters %}
+        {% if letter == query %}
+            <li class="letter_link"><a href="{% url 'minerals:letter_list' letter %}" id="active_link">{{ letter }}</a></li>
+        {% else %}
+            <li class="letter_link"><a href="{% url 'minerals:letter_list' letter %}">{{ letter }}</a></li>
+        {% endif %}
+    {% endfor %}            
+    </ul>
+    <h2 class="sub_header">Mineral Groups</h2>
+    <ul class="category_links">
+    {% for category in categories %}
+        {% if category == query %}
+            <li class="category_link"><a href="{% url 'minerals:category_list' category %}" id="active_link">{{ category }}</a></li>
+        {% else %}
+            <li class="category_link"><a href="{% url 'minerals:category_list' category %}">{{ category }}</a></li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+{% endblock %}
+
