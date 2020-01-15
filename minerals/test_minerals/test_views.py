@@ -4,6 +4,7 @@ from django.http import Http404
 from django.urls import reverse
 from ..models import Mineral
 
+
 class MineralListingPage(TestCase):
     '''Verify that filtering minerals by first letter defaults
     to the letter "A" upon requesting the listing page'''
@@ -13,12 +14,14 @@ class MineralListingPage(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed('minerals/list.html')
         self.assertContains(
-            response, 
+            response,
             '<a href="/minerals/letter/A/" id="active_link">A</a>', html=True
         )
 
     def test_get_listing_by_letter_b(self):
-        response = self.client.get(reverse("minerals:letter_list", kwargs={'query': 'B'}))
+        response = self.client.get(
+            reverse("minerals:letter_list", kwargs={'query': 'B'})
+        )
         self.assertContains(response, "Brushite")
 
 
@@ -26,8 +29,8 @@ class MineralDetailView(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.mineral_name_200="Armalcolite"
-        cls.mineral_name_404="Kryptonite"
+        cls.mineral_name_200 = "Armalcolite"
+        cls.mineral_name_404 = "Kryptonite"
 
     def test_mineral_exists_detail_page(self):
         response = self.client.get(
@@ -46,6 +49,7 @@ class MineralDetailView(TestCase):
         )
         self.assertEqual(response.status_code, 404)
 
+
 class SearchFormResults(TestCase):
 
     def test_user_search_query_fail(self):
@@ -60,8 +64,9 @@ class SearchFormResults(TestCase):
             )
         )
         self.assertTemplateUsed("minerals/list.html")
-        self.assertContains(response, "No minerals exist with the provided search.")
-          
+        self.assertContains(
+            response, "No minerals exist with the provided search."
+        )
 
     def test_user_search_query_results_found(self):
         response = self.client.get(
@@ -88,5 +93,7 @@ class SearchFormResults(TestCase):
 class CategoryFilterLinks(TestCase):
 
     def test_mineral_category_link(self):
-        response = self.client.get('minerals:category', kwargs={'category': "Native metal"})
+        response = self.client.get(
+            'minerals:category', kwargs={'category': "Native metal"}
+        )
         self.assertTemplateUsed("minerals/list.html")
