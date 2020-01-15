@@ -6,7 +6,7 @@ from django.urls import reverse
 
 class Mineral(models.Model):
     name = models.CharField(unique=True, max_length=255)
-    image_filename = models.ImageField(max_length=255, blank=True)
+    image_filename = models.CharField(max_length=255, blank=True)
     image_caption = models.CharField(max_length=255, blank=True)
     category = models.CharField(max_length=255, blank=True)
     formula = models.CharField(max_length=255, blank=True)
